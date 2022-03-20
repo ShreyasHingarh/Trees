@@ -146,6 +146,52 @@ namespace TreesTheProject
         public void Delete(T value)
         {
 
+            Node<T> OneToDelete = Search(value);
+            if (OneToDelete == null || size == 0)
+            {
+                return;
+            }
+           
+            if (OneToDelete.RightChild == null && OneToDelete.LeftChild == null)
+            {
+                if (OneToDelete.isLeftChild)
+                {
+                    OneToDelete.Parent.LeftChild = null;
+                }
+                else if (OneToDelete.isRightChild)
+                {
+                    OneToDelete.Parent.RightChild = null;
+                }
+            }
+            else if (OneToDelete.RightChild != null && OneToDelete.LeftChild == null)
+            {
+                OneToDelete.RightChild.Parent = OneToDelete.Parent;
+                if (OneToDelete.isLeftChild)
+                {
+                    OneToDelete.Parent.LeftChild = OneToDelete.RightChild;
+                }
+                else if(OneToDelete.isRightChild)
+                { 
+                    OneToDelete.Parent.RightChild = OneToDelete.RightChild;
+                }
+            }
+            else if(OneToDelete.RightChild == null && OneToDelete.LeftChild != null)
+            {
+                OneToDelete.LeftChild.Parent = OneToDelete.Parent;
+                if(OneToDelete.isLeftChild)
+                {
+                    OneToDelete.Parent.LeftChild = OneToDelete.LeftChild;
+                }
+                else if(OneToDelete.isRightChild)
+                {
+                    OneToDelete.Parent.RightChild = OneToDelete.LeftChild;
+                }
+            }
+            else if(OneToDelete.hasTwoChildren)
+            {
+
+            }
+            size--;
         }
     }
 }
