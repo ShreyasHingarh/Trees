@@ -14,7 +14,9 @@ namespace TreesTheProject
             }
             ;
 
-
+            Console.WriteLine(tree.Minimum);
+            Console.WriteLine(tree.Maximum);
+            Console.WriteLine(tree.Contains(345));
         }
     }
 }
