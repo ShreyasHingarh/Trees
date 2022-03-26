@@ -47,6 +47,7 @@ namespace TreesTheProject
         {
             get
             {
+                if (size <= 0) return default(T);
                 Node<T> temp = Root;
                 
                     
@@ -61,6 +62,7 @@ namespace TreesTheProject
         {
             get
             {
+                if (size <= 0) return default(T);
                 Node<T> temp = Root;
                 while(temp.RightChild != null)
                 {
@@ -151,10 +153,20 @@ namespace TreesTheProject
             {
                 return;
             }
+                // two
+                // find largest value in left subtree
+                // make that node the root
+                // Remove that node;
            
-            if (OneToDelete.RightChild == null && OneToDelete.LeftChild == null)
+            else if (OneToDelete.RightChild == null && OneToDelete.LeftChild == null)
             {
-                if (OneToDelete.isLeftChild)
+                if(OneToDelete.Value.Equals(Root.Value))
+                {
+                    Root = null;
+                    size = 0;
+                    return;
+                }
+                else if (OneToDelete.isLeftChild)
                 {
                     OneToDelete.Parent.LeftChild = null;
                 }
@@ -165,25 +177,43 @@ namespace TreesTheProject
             }
             else if (OneToDelete.RightChild != null && OneToDelete.LeftChild == null)
             {
-                OneToDelete.RightChild.Parent = OneToDelete.Parent;
-                if (OneToDelete.isLeftChild)
+                if (OneToDelete.Value.Equals(Root.Value))
                 {
+                    Node<T> temp = Root;
+                    Root = null;
+                    Root = temp.RightChild;
+                    temp.RightChild.Parent = null;
+
+                }
+                
+                else if (OneToDelete.isLeftChild)
+                {
+                    OneToDelete.RightChild.Parent = OneToDelete.Parent;
                     OneToDelete.Parent.LeftChild = OneToDelete.RightChild;
                 }
                 else if(OneToDelete.isRightChild)
-                { 
+                {
+                    OneToDelete.RightChild.Parent = OneToDelete.Parent;
                     OneToDelete.Parent.RightChild = OneToDelete.RightChild;
                 }
             }
             else if(OneToDelete.RightChild == null && OneToDelete.LeftChild != null)
             {
-                OneToDelete.LeftChild.Parent = OneToDelete.Parent;
-                if(OneToDelete.isLeftChild)
+                if (OneToDelete.Value.Equals(Root.Value))
                 {
+                    Node<T> temp = Root;
+                    Root = null;
+                    Root = temp.LeftChild;
+                    temp.LeftChild.Parent = null;
+                }
+                else if(OneToDelete.isLeftChild)
+                {
+                    OneToDelete.LeftChild.Parent = OneToDelete.Parent;
                     OneToDelete.Parent.LeftChild = OneToDelete.LeftChild;
                 }
                 else if(OneToDelete.isRightChild)
                 {
+                    OneToDelete.LeftChild.Parent = OneToDelete.Parent;
                     OneToDelete.Parent.RightChild = OneToDelete.LeftChild;
                 }
             }
