@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TreesTheProject
 {
@@ -6,17 +7,18 @@ namespace TreesTheProject
     {
         static void Main(string[] args)
         {
-            Tree<int> tree = new Tree<int>();
-            int[] nums = new int[] {9,6,4,7,1,5,8};
-            for(int i = 0;i < nums.Length;i++)
+            Tree<char> tree = new Tree<char>();
+            char[] letters = new char[] {'F','B','A','D','C','E','G','I','H'};
+            for(int i = 0;i < letters.Length;i++)
             {
-                tree.Insert(nums[i]);
+                tree.Insert(letters[i]);
             }
             ;
-            tree.Delete(9);
-            Console.WriteLine(tree.Minimum);
-            Console.WriteLine(tree.Maximum);
-            Console.WriteLine(tree.Contains(345));
+            List<char> list = tree.InOrderTraversal();
+            foreach(var letter in list)
+            {
+                Console.WriteLine(letter);
+            }
         }
     }
 }

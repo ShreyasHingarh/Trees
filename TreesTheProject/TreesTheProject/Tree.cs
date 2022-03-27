@@ -84,7 +84,7 @@ namespace TreesTheProject
             
             while(true)
             { 
-                if (value.CompareTo(temp.Value) > 0)
+                if (value.CompareTo(temp.Value) >= 0)
                 {
                     if(temp.RightChild != null)
                     {
@@ -98,7 +98,7 @@ namespace TreesTheProject
                         return;
                     }
                 }
-                else if (value.CompareTo(temp.Value) <= 0)
+                else if (value.CompareTo(temp.Value) < 0)
                 {
                     if(temp.LeftChild != null)
                     {
@@ -219,9 +219,73 @@ namespace TreesTheProject
             }
             else if(OneToDelete.hasTwoChildren)
             {
-
+                Node<T> temp = OneToDelete.LeftChild;
+                while (temp.RightChild != null)
+                {
+                    temp = temp.RightChild;
+                }
+                T num = temp.Value;
+                Delete(temp.Value);
+                if (OneToDelete.Value.Equals(Root.Value))
+                {
+                    Root.Value = num;
+                }
+                else
+                {
+                    OneToDelete.Value = num;
+                }
+               
+                size++;
             }
             size--;
+        }
+
+        public List<T> PreOrderTraversal()
+        {
+            List<T> NodesProcessed = new List<T>();
+            
+            Stack<Node<T>> NodesToBeProcessed = new Stack<Node<T>>();
+            NodesToBeProcessed.Push(Root);
+            while(NodesToBeProcessed.Count != 0)
+            {
+                Node<T> temp = NodesToBeProcessed.Pop();
+                NodesProcessed.Add(temp.Value);
+                if (temp.RightChild != null)
+                {
+                    NodesToBeProcessed.Push(temp.RightChild);
+                }
+                if (temp.LeftChild != null)
+                {
+                    NodesToBeProcessed.Push(temp.LeftChild);
+                }
+               
+             
+            }
+            return NodesProcessed;
+        }
+        public List<T> InOrderTraversal()
+        {
+            List<T> FinishedNodes = new List<T>();
+            Stack<Node<T>> UnfinishedNodes = new Stack<Node<T>>();
+            UnfinishedNodes.Push(Root);
+            Node<T> temp = Root.LeftChild;
+
+                while (UnfinishedNodes.Count != 0)
+                {
+                    while (temp.LeftChild != null)
+                    {
+                        UnfinishedNodes.Push(temp);
+                        temp = temp.LeftChild;
+                    }
+                    FinishedNodes.Add(temp.Value);
+                    temp = UnfinishedNodes.Pop();
+                    FinishedNodes.Add(temp.Value);
+                    temp = temp.RightChild;
+                }
+
+               
+            
+            return FinishedNodes;
         }
     }
 }
