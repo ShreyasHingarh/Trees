@@ -270,19 +270,32 @@ namespace TreesTheProject
             UnfinishedNodes.Push(Root);
             Node<T> temp = Root.LeftChild;
 
-                while (UnfinishedNodes.Count != 0)
+            while (UnfinishedNodes.Count != 0)
+            {
+
+                while (temp.LeftChild != null)
                 {
-                    while (temp.LeftChild != null)
-                    {
-                        UnfinishedNodes.Push(temp);
-                        temp = temp.LeftChild;
-                    }
-                    FinishedNodes.Add(temp.Value);
-                    temp = UnfinishedNodes.Pop();
-                    FinishedNodes.Add(temp.Value);
-                    temp = temp.RightChild;
+                    UnfinishedNodes.Push(temp);
+                    temp = temp.LeftChild;
+                }
+                FinishedNodes.Add(temp.Value);
+                
+              
+                
+                if(temp.Parent.RightChild != null)
+                {
+                    UnfinishedNodes.Pop();
+                    FinishedNodes.Add(temp.Parent.Value);
+
+                    temp = temp.Parent.RightChild;
+                }
+                else if (temp.LeftChild == null && temp.RightChild == null && Root.RightChild != null && !FinishedNodes.Contains(Root.RightChild.Value))
+                {
+                    UnfinishedNodes.Clear();
+                    temp = Root.RightChild;
                 }
 
+            }
                
             
             return FinishedNodes;
