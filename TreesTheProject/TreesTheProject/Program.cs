@@ -8,16 +8,19 @@ namespace TreesTheProject
         static void Main(string[] args)
         {
             Tree<char> tree = new Tree<char>();
-            char[] letters = new char[] {'F','B','A','D', 'C','E','G','I','H'};
-            for(int i = 0;i < letters.Length;i++)
+
+
+
+            char[] letters = new char[] { 'F', 'B', 'A', 'D', 'C', 'E', 'G', 'I', 'H' };
+            for (int i = 0; i < letters.Length; i++)
             {
                 tree.Insert(letters[i]);
             }
             ;
-            List<char> list = tree.InOrderTraversal();
+            var list = tree.BreadthFirst(tree.Root);
             foreach(var letter in list)
             {
-                Console.WriteLine(letter);
+               Console.WriteLine(letter);
             }
         }
     }

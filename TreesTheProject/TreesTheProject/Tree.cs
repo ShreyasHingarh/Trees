@@ -153,10 +153,7 @@ namespace TreesTheProject
             {
                 return;
             }
-                // two
-                // find largest value in left subtree
-                // make that node the root
-                // Remove that node;
+               
            
             else if (OneToDelete.RightChild == null && OneToDelete.LeftChild == null)
             {
@@ -263,42 +260,80 @@ namespace TreesTheProject
             }
             return NodesProcessed;
         }
-        public List<T> InOrderTraversal()
+
+        private void RecursivePreOrder(Node<T> node, List<T> values)
         {
-            List<T> FinishedNodes = new List<T>();
-            Stack<Node<T>> UnfinishedNodes = new Stack<Node<T>>();
-            UnfinishedNodes.Push(Root);
-            Node<T> temp = Root.LeftChild;
-
-            while (UnfinishedNodes.Count != 0)
+            if(node == null)
             {
-
-                while (temp.LeftChild != null)
-                {
-                    UnfinishedNodes.Push(temp);
-                    temp = temp.LeftChild;
-                }
-                FinishedNodes.Add(temp.Value);
-                
-              
-                
-                if(temp.Parent.RightChild != null)
-                {
-                    UnfinishedNodes.Pop();
-                    FinishedNodes.Add(temp.Parent.Value);
-
-                    temp = temp.Parent.RightChild;
-                }
-                else if (temp.LeftChild == null && temp.RightChild == null && Root.RightChild != null && !FinishedNodes.Contains(Root.RightChild.Value))
-                {
-                    UnfinishedNodes.Clear();
-                    temp = Root.RightChild;
-                }
-
+                return;
             }
-               
+
+            values.Add(node.Value); // Root
+            RecursivePreOrder(node.LeftChild, values);
+            RecursivePreOrder(node.RightChild, values);
+        }
+
+        public List<T> RecursivePreOrder()
+        {
+            List<T> values = new List<T>();
+            RecursivePreOrder(Root, values);
+            return values;
+        }
+        private void RecursiveInOrder(Node<T> node, List<T> values)
+        {
+            if(node == null)
+            {
+                return;
+            }
+            RecursiveInOrder(node.LeftChild, values);
+            values.Add(node.Value);
             
-            return FinishedNodes;
+            RecursiveInOrder(node.RightChild, values);
+        }
+        public List<T> RecursiveInOrder(Node<T> node)
+        {
+            List<T> values = new List<T>();
+            RecursiveInOrder(node, values);
+            return values;
+        }
+        private void RecursivePostOrder(Node<T> node, List<T> values)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            RecursivePostOrder(node.LeftChild, values);
+
+            RecursivePostOrder(node.RightChild, values);
+            values.Add(node.Value);
+
+        }
+        public List<T> RecursivePostOrder(Node<T> node)
+        {
+            List<T> values = new List<T>();
+            RecursivePostOrder(node, values);
+            return values;
+        }
+
+        public List<T> BreadthFirst(Node<T> node)
+        {
+            List<T> values = new List<T>();
+            Queue<Node<T>> valuesToBeAdded = new Queue<Node<T>>();
+            valuesToBeAdded.Enqueue(node);
+            while(valuesToBeAdded.Count > 0)
+            {
+                Node<T> curr = valuesToBeAdded.Dequeue();
+                values.Add(curr.Value);
+                if (curr.LeftChild != null)
+                {
+                    valuesToBeAdded.Enqueue(curr.LeftChild);
+                }
+                if (curr.RightChild != null)
+                {
+                    valuesToBeAdded.Enqueue(curr.RightChild);
+                }
+            }
+            return values;
         }
     }
 }
